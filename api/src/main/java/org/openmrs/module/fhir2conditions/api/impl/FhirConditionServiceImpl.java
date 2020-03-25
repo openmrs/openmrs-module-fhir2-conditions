@@ -9,6 +9,38 @@
  */
 package org.openmrs.module.fhir2conditions.api.impl;
 
-public class FhirConditionServiceImpl {
+import lombok.AccessLevel;
+import lombok.Setter;
+import org.hl7.fhir.r4.model.Condition;
+import org.openmrs.annotation.OpenmrsProfile;
+import org.openmrs.module.fhir2.api.FhirConditionService;
+import org.openmrs.module.fhir2.api.dao.FhirConditionDao;
+import org.openmrs.module.fhir2.api.translators.ConditionTranslator;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
+@Primary
+@Component
+@Transactional
+@Setter(AccessLevel.PACKAGE)
+@OpenmrsProfile(openmrsPlatformVersion = "2.0.* - 2.1.*")
+public class FhirConditionServiceImpl implements FhirConditionService {
+
+	@Autowired
+	private FhirConditionDao<org.openmrs.module.emrapi.conditionslist.Condition> dao;
+
+	@Autowired
+	private ConditionTranslator<org.openmrs.module.emrapi.conditionslist.Condition> conditionTranslator;
+
+	@Override
+	public Condition getConditionByUuid(String uuid) {
+		return conditionTranslator.toFhirResource(dao.getConditionByUuid(uuid));
+	}
+
+	@Override
+	public Condition saveCondition(Condition condition) {
+		return null;
+	}
 }

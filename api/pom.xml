@@ -11,4 +11,19 @@
 	<packaging>jar</packaging>
 	<name>Fhir2 Conditions API</name>
 	<description>API project for Fhir2 Conditions</description>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.openmrs.module</groupId>
+			<artifactId>fhir2-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.openmrs.module</groupId>
+			<artifactId>emrapi-condition-list</artifactId>
+		</dependency>
+	</dependencies>
 </project>

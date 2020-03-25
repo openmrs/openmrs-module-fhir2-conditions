@@ -9,6 +9,34 @@
  */
 package org.openmrs.module.fhir2conditions.api.dao.impl;
 
-public class FhirConditionDaoImpl {
+import static org.hibernate.criterion.Restrictions.eq;
 
+import lombok.AccessLevel;
+import lombok.Setter;
+import org.hibernate.SessionFactory;
+import org.openmrs.annotation.OpenmrsProfile;
+import org.openmrs.module.emrapi.conditionslist.Condition;
+import org.openmrs.module.fhir2.api.dao.FhirConditionDao;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+@Component
+@Setter(AccessLevel.PACKAGE)
+@OpenmrsProfile(openmrsPlatformVersion = "2.0.* - 2.1.*")
+public class FhirConditionDaoImpl implements FhirConditionDao<Condition> {
+
+	@Autowired
+	private SessionFactory sessionFactory;
+
+	@Override
+	public Condition getConditionByUuid(String uuid) {
+		return (Condition) sessionFactory.getCurrentSession()
+				.createCriteria(org.openmrs.module.emrapi.conditionslist.Condition.class).add(eq("uuid", uuid))
+				.uniqueResult();
+	}
+
+	@Override
+	public Condition saveCondition(Condition condition) {
+		return null;
+	}
 }
