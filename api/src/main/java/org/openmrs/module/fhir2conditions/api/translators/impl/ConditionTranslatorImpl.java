@@ -16,11 +16,11 @@ import org.openmrs.module.emrapi.conditionslist.Condition;
 import org.openmrs.module.fhir2.api.translators.ConditionTranslator;
 import org.springframework.stereotype.Component;
 
-@Component
 @Setter(AccessLevel.PACKAGE)
+@Component("fhir2conditions.conditionTranslatorImpl")
 @OpenmrsProfile(openmrsPlatformVersion = "2.0.* - 2.1.*")
 public class ConditionTranslatorImpl implements ConditionTranslator<Condition> {
-
+	
 	@Override
 	public org.hl7.fhir.r4.model.Condition toFhirResource(Condition condition) {
 		if (condition == null) {
@@ -28,22 +28,22 @@ public class ConditionTranslatorImpl implements ConditionTranslator<Condition> {
 		}
 		org.hl7.fhir.r4.model.Condition fhirCondition = new org.hl7.fhir.r4.model.Condition();
 		fhirCondition.setId(condition.getUuid());
-
+		
 		return fhirCondition;
 	}
-
+	
 	@Override
 	public Condition toOpenmrsType(org.hl7.fhir.r4.model.Condition condition) {
 		return this.toOpenmrsType(new Condition(), condition);
 	}
-
+	
 	@Override
 	public Condition toOpenmrsType(Condition existingCondition, org.hl7.fhir.r4.model.Condition condition) {
 		if (condition == null) {
 			return existingCondition;
 		}
 		existingCondition.setUuid(condition.getId());
-
+		
 		return existingCondition;
 	}
 }

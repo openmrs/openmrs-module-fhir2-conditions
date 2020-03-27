@@ -29,31 +29,31 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
 @Primary
-@Component
+@Component("fhir2conditions.fhirConditionDaoImpl")
 @Setter(AccessLevel.PACKAGE)
 @OpenmrsProfile(openmrsPlatformVersion = "2.0.* - 2.1.*")
 public class FhirConditionDaoImpl implements FhirConditionDao<Condition> {
-
+	
 	@Autowired
 	private SessionFactory sessionFactory;
-
+	
 	@Override
 	public Condition getConditionByUuid(String uuid) {
 		return (Condition) sessionFactory.getCurrentSession()
-				.createCriteria(org.openmrs.module.emrapi.conditionslist.Condition.class).add(eq("uuid", uuid))
-				.uniqueResult();
+		        .createCriteria(org.openmrs.module.emrapi.conditionslist.Condition.class).add(eq("uuid", uuid))
+		        .uniqueResult();
 	}
-
+	
 	@Override
 	public Condition saveCondition(Condition condition) {
 		return null;
 	}
-
+	
 	@Override
 	public Collection<Condition> searchForConditions(ReferenceAndListParam referenceAndListParam,
-			ReferenceAndListParam referenceAndListParam1, TokenAndListParam tokenAndListParam,
-			TokenAndListParam tokenAndListParam1, DateRangeParam dateRangeParam, QuantityParam quantityParam,
-			DateRangeParam dateRangeParam1, SortSpec sortSpec) {
+	        ReferenceAndListParam referenceAndListParam1, TokenAndListParam tokenAndListParam,
+	        TokenAndListParam tokenAndListParam1, DateRangeParam dateRangeParam, QuantityParam quantityParam,
+	        DateRangeParam dateRangeParam1, SortSpec sortSpec) {
 		return null;
 	}
 }

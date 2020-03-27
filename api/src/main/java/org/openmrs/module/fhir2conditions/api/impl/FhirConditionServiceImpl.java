@@ -29,31 +29,31 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 @Primary
-@Component
+@Component("fhir2conditions.fhirConditionServiceImpl")
 @Transactional
 @Setter(AccessLevel.PACKAGE)
 @OpenmrsProfile(openmrsPlatformVersion = "2.0.* - 2.1.*")
 public class FhirConditionServiceImpl implements FhirConditionService {
-
+	
 	@Autowired
 	private FhirConditionDao<org.openmrs.module.emrapi.conditionslist.Condition> dao;
-
+	
 	@Autowired
 	private ConditionTranslator<org.openmrs.module.emrapi.conditionslist.Condition> conditionTranslator;
-
+	
 	@Override
 	public Condition getConditionByUuid(String uuid) {
 		return conditionTranslator.toFhirResource(dao.getConditionByUuid(uuid));
 	}
-
+	
 	@Override
 	public Collection<Condition> searchConditions(ReferenceAndListParam referenceAndListParam,
-			ReferenceAndListParam referenceAndListParam1, TokenAndListParam tokenAndListParam,
-			TokenAndListParam tokenAndListParam1, DateRangeParam dateRangeParam, QuantityParam quantityParam,
-			DateRangeParam dateRangeParam1, SortSpec sortSpec) {
+	        ReferenceAndListParam referenceAndListParam1, TokenAndListParam tokenAndListParam,
+	        TokenAndListParam tokenAndListParam1, DateRangeParam dateRangeParam, QuantityParam quantityParam,
+	        DateRangeParam dateRangeParam1, SortSpec sortSpec) {
 		return null;
 	}
-
+	
 	@Override
 	public Condition saveCondition(Condition condition) {
 		return null;
