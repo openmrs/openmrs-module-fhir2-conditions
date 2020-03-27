@@ -11,6 +11,13 @@ package org.openmrs.module.fhir2conditions.api.dao.impl;
 
 import static org.hibernate.criterion.Restrictions.eq;
 
+import java.util.Collection;
+
+import ca.uhn.fhir.rest.api.SortSpec;
+import ca.uhn.fhir.rest.param.DateRangeParam;
+import ca.uhn.fhir.rest.param.QuantityParam;
+import ca.uhn.fhir.rest.param.ReferenceAndListParam;
+import ca.uhn.fhir.rest.param.TokenAndListParam;
 import lombok.AccessLevel;
 import lombok.Setter;
 import org.hibernate.SessionFactory;
@@ -37,6 +44,14 @@ public class FhirConditionDaoImpl implements FhirConditionDao<Condition> {
 
 	@Override
 	public Condition saveCondition(Condition condition) {
+		return null;
+	}
+
+	@Override
+	public Collection<Condition> searchForConditions(ReferenceAndListParam referenceAndListParam,
+			ReferenceAndListParam referenceAndListParam1, TokenAndListParam tokenAndListParam,
+			TokenAndListParam tokenAndListParam1, DateRangeParam dateRangeParam, QuantityParam quantityParam,
+			DateRangeParam dateRangeParam1, SortSpec sortSpec) {
 		return null;
 	}
 }
