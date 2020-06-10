@@ -12,13 +12,10 @@ package org.openmrs.module.fhir2conditions.api.translators.impl;
 import lombok.AccessLevel;
 import lombok.Setter;
 import org.hl7.fhir.r4.model.CodeableConcept;
-import org.hl7.fhir.r4.model.Coding;
 import org.hl7.fhir.r4.model.DateTimeType;
-import org.openmrs.Concept;
 import org.openmrs.User;
 import org.openmrs.annotation.OpenmrsProfile;
 import org.openmrs.module.emrapi.conditionslist.Condition;
-import org.openmrs.module.fhir2.FhirConstants;
 import org.openmrs.module.fhir2.api.translators.ConceptTranslator;
 import org.openmrs.module.fhir2.api.translators.ConditionTranslator;
 import org.openmrs.module.fhir2.api.translators.PatientReferenceTranslator;
@@ -53,14 +50,14 @@ public class ConditionTranslatorImpl implements ConditionTranslator<Condition> {
 		fhirCondition.setId(condition.getUuid());
 		fhirCondition.setSubject(patientReferenceTranslator.toFhirResource(condition.getPatient()));
 		
-		if (condition.getConcept() == null) {
-			CodeableConcept codeableConcept = new CodeableConcept();
-			codeableConcept.addCoding(new Coding().setCode(condition.getConditionNonCoded()).setSystem(
-			    FhirConstants.OPENMRS_URI));
+		if (condition.getConcept() != null) {
+			CodeableConcept codeableConcept = conceptTranslator.toFhirResource(condition.getConcept());
+			if (condition.getConditionNonCoded() != null) {
+				codeableConcept.setText(condition.getConditionNonCoded());
+			}
 			fhirCondition.setCode(codeableConcept);
-		} else {
-			fhirCondition.setCode(conceptTranslator.toFhirResource(condition.getConcept()));
 		}
+		
 		fhirCondition.setOnset(new DateTimeType().setValue(condition.getOnsetDate()));
 		fhirCondition.setRecorder(practitionerReferenceTranslator.toFhirResource(condition.getCreator()));
 		fhirCondition.setRecordedDate(condition.getDateCreated());
@@ -83,13 +80,12 @@ public class ConditionTranslatorImpl implements ConditionTranslator<Condition> {
 		}
 		existingCondition.setUuid(condition.getId());
 		existingCondition.setPatient(patientReferenceTranslator.toOpenmrsType(condition.getSubject()));
-		if (!condition.getCode().getCoding().isEmpty()) {
-			Concept concept = conceptTranslator.toOpenmrsType(condition.getCode());
-			if (concept == null) {
-				existingCondition.setConditionNonCoded(condition.getCode().getCoding().get(0).getCode());
-			} else {
-				existingCondition.setConcept(concept);
-			}
+		
+		if (!condition.getCode().isEmpty()) {
+			existingCondition.setConcept(conceptTranslator.toOpenmrsType(condition.getCode()));
+		}
+		if (condition.getCode().hasText()) {
+			existingCondition.setConditionNonCoded(condition.getCode().getText());
 		}
 		existingCondition.setOnsetDate(condition.getOnsetDateTimeType().getValue());
 		existingCondition.setCreator(practitionerReferenceTranslator.toOpenmrsType(condition.getRecorder()));

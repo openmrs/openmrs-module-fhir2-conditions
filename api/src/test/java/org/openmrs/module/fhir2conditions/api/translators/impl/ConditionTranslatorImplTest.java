@@ -17,7 +17,6 @@ import static org.hamcrest.Matchers.empty;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.when;
 
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -239,7 +238,7 @@ public class ConditionTranslatorImplTest {
 		org.hl7.fhir.r4.model.Condition condition = conditionTranslator.toFhirResource(openMrsCondition);
 		assertThat(condition, notNullValue());
 		assertThat(condition.getCode(), notNullValue());
-		assertThat(condition.getCode().getCoding(), not(Collections.emptyList()));
+		assertThat(condition.getCode().getCoding(), not(Matchers.<Coding> empty()));
 		assertThat(condition.getCode().getCoding().get(0).getCode(), equalTo(CODE.toString()));
 		assertThat(condition.getCode().getCoding().get(0).getSystem(), equalTo(SYSTEM));
 	}

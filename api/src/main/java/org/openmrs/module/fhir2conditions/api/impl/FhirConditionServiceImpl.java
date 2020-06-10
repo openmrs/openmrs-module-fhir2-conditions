@@ -13,7 +13,7 @@ import java.util.Collection;
 
 import ca.uhn.fhir.rest.api.SortSpec;
 import ca.uhn.fhir.rest.param.DateRangeParam;
-import ca.uhn.fhir.rest.param.QuantityParam;
+import ca.uhn.fhir.rest.param.QuantityAndListParam;
 import ca.uhn.fhir.rest.param.ReferenceAndListParam;
 import ca.uhn.fhir.rest.param.TokenAndListParam;
 import lombok.AccessLevel;
@@ -49,7 +49,7 @@ public class FhirConditionServiceImpl implements FhirConditionService {
 	@Override
 	public Collection<Condition> searchConditions(ReferenceAndListParam referenceAndListParam,
 	        ReferenceAndListParam referenceAndListParam1, TokenAndListParam tokenAndListParam,
-	        TokenAndListParam tokenAndListParam1, DateRangeParam dateRangeParam, QuantityParam quantityParam,
+	        TokenAndListParam tokenAndListParam1, DateRangeParam dateRangeParam, QuantityAndListParam quantityAndListParam,
 	        DateRangeParam dateRangeParam1, SortSpec sortSpec) {
 		return null;
 	}
