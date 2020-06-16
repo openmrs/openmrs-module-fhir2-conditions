@@ -70,7 +70,9 @@ public class ConditionTranslatorImplTest {
 	
 	private static final Integer CODE = 102309;
 	
-	private static final String CONDITION_NON_CODED = "condition non coded";
+	private static final Integer CONDITION_NON_CODED = 5602;
+	
+	private static final String CONDITION_NON_CODED_TEXT = "condition non coded";
 	
 	private static final String CONCEPT_UUID = "31d754f5-3e9e-4ca3-805c-87f97a1f5e4b";
 	
@@ -247,28 +249,33 @@ public class ConditionTranslatorImplTest {
 	public void shouldTranslateConditionNonCodedToOpenMrsType() {
 		CodeableConcept codeableConcept = new CodeableConcept();
 		Coding coding = new Coding();
-		coding.setCode(CONDITION_NON_CODED);
+		coding.setCode(String.valueOf(CONDITION_NON_CODED));
 		codeableConcept.addCoding(coding);
+		codeableConcept.setText(CONDITION_NON_CODED_TEXT);
 		when(conceptTranslator.toOpenmrsType(codeableConcept)).thenReturn(null);
 		fhirCondition.setCode(codeableConcept);
 		Condition condition = conditionTranslator.toOpenmrsType(fhirCondition);
 		assertThat(condition, notNullValue());
 		assertThat(condition.getConditionNonCoded(), notNullValue());
-		assertThat(condition.getConditionNonCoded(), equalTo(CONDITION_NON_CODED));
+		assertThat(condition.getConditionNonCoded(), equalTo(CONDITION_NON_CODED_TEXT));
 	}
 	
 	@Test
 	public void shouldTranslateConditionNonCodedToFhirType() {
 		CodeableConcept codeableConcept = new CodeableConcept();
 		Coding coding = new Coding();
-		coding.setCode(CONDITION_NON_CODED);
+		coding.setCode(String.valueOf(CONDITION_NON_CODED));
 		codeableConcept.addCoding(coding);
-		openMrsCondition.setConditionNonCoded(CONDITION_NON_CODED);
+		Concept concept = new Concept();
+		concept.setConceptId(CONDITION_NON_CODED);
+		openMrsCondition.setConcept(concept);
+		openMrsCondition.setConditionNonCoded(CONDITION_NON_CODED_TEXT);
+		when(conceptTranslator.toFhirResource(concept)).thenReturn(codeableConcept);
 		org.hl7.fhir.r4.model.Condition condition = conditionTranslator.toFhirResource(openMrsCondition);
 		assertThat(condition, notNullValue());
 		assertThat(condition.getCode(), notNullValue());
 		assertThat(condition.getCode().getCoding(), not(empty()));
-		assertThat(condition.getCode().getCoding().get(0).getCode(), equalTo(CONDITION_NON_CODED));
+		assertThat(condition.getCode().getCoding().get(0).getCode(), equalTo(String.valueOf(CONDITION_NON_CODED)));
 	}
 	
 	@Test

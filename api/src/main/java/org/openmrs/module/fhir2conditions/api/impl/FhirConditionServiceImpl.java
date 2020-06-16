@@ -9,19 +9,20 @@
  */
 package org.openmrs.module.fhir2conditions.api.impl;
 
-import java.util.Collection;
-
 import ca.uhn.fhir.rest.api.SortSpec;
+import ca.uhn.fhir.rest.api.server.IBundleProvider;
 import ca.uhn.fhir.rest.param.DateRangeParam;
 import ca.uhn.fhir.rest.param.QuantityAndListParam;
 import ca.uhn.fhir.rest.param.ReferenceAndListParam;
 import ca.uhn.fhir.rest.param.TokenAndListParam;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.Setter;
 import org.hl7.fhir.r4.model.Condition;
 import org.openmrs.annotation.OpenmrsProfile;
 import org.openmrs.module.fhir2.api.FhirConditionService;
 import org.openmrs.module.fhir2.api.dao.FhirConditionDao;
+import org.openmrs.module.fhir2.api.impl.BaseFhirService;
 import org.openmrs.module.fhir2.api.translators.ConditionTranslator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
@@ -29,28 +30,23 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 @Primary
-@Component("fhir2conditions.fhirConditionServiceImpl")
 @Transactional
 @Setter(AccessLevel.PACKAGE)
+@Getter(AccessLevel.PROTECTED)
+@Component("fhir2conditions.fhirConditionServiceImpl")
 @OpenmrsProfile(openmrsPlatformVersion = "2.0.* - 2.1.*")
-public class FhirConditionServiceImpl implements FhirConditionService {
+public class FhirConditionServiceImpl extends BaseFhirService<Condition, org.openmrs.module.emrapi.conditionslist.Condition> implements FhirConditionService {
 	
 	@Autowired
 	private FhirConditionDao<org.openmrs.module.emrapi.conditionslist.Condition> dao;
 	
 	@Autowired
-	private ConditionTranslator<org.openmrs.module.emrapi.conditionslist.Condition> conditionTranslator;
+	private ConditionTranslator<org.openmrs.module.emrapi.conditionslist.Condition> translator;
 	
 	@Override
-	public Condition getConditionByUuid(String uuid) {
-		return conditionTranslator.toFhirResource(dao.getConditionByUuid(uuid));
-	}
-	
-	@Override
-	public Collection<Condition> searchConditions(ReferenceAndListParam referenceAndListParam,
-	        ReferenceAndListParam referenceAndListParam1, TokenAndListParam tokenAndListParam,
-	        TokenAndListParam tokenAndListParam1, DateRangeParam dateRangeParam, QuantityAndListParam quantityAndListParam,
-	        DateRangeParam dateRangeParam1, SortSpec sortSpec) {
+	public IBundleProvider searchConditions(ReferenceAndListParam referenceAndListParam,
+	        TokenAndListParam tokenAndListParam, TokenAndListParam tokenAndListParam1, DateRangeParam dateRangeParam,
+	        QuantityAndListParam quantityAndListParam, DateRangeParam dateRangeParam1, SortSpec sortSpec) {
 		return null;
 	}
 	

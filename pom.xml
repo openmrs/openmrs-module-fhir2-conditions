@@ -58,13 +58,13 @@
 				<groupId>org.openmrs.module</groupId>
 				<artifactId>fhir2-api</artifactId>
 				<version>${openmrsModuleFhirVersion}</version>
-				<scope>provided</scope>
+				<scope>compile</scope>
 			</dependency>
 			<dependency>
 				<groupId>org.openmrs.module</groupId>
 				<artifactId>emrapi-condition-list</artifactId>
 				<version>${emrApiConditionModuleApiVersion}</version>
-				<scope>provided</scope>
+				<scope>compile</scope>
 			</dependency>
 			<dependency>
 				<groupId>org.projectlombok</groupId>

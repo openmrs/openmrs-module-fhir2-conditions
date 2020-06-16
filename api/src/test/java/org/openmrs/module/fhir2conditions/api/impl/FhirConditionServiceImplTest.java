@@ -35,11 +35,11 @@ public class FhirConditionServiceImplTest {
 	private FhirConditionDao<Condition> dao;
 	
 	@Mock
-	private ConditionTranslator<Condition> conditionTranslator;
+	private ConditionTranslator<Condition> translator;
 	
 	private FhirConditionServiceImpl conditionService;
 	
-	Condition openmrsCondition;
+	private Condition openmrsCondition;
 	
 	private org.hl7.fhir.r4.model.Condition fhirCondition;
 	
@@ -47,7 +47,7 @@ public class FhirConditionServiceImplTest {
 	public void setup() {
 		conditionService = new FhirConditionServiceImpl();
 		conditionService.setDao(dao);
-		conditionService.setConditionTranslator(conditionTranslator);
+		conditionService.setTranslator(translator);
 		
 		openmrsCondition = new Condition();
 		openmrsCondition.setUuid(CONDITION_UUID);
@@ -58,16 +58,16 @@ public class FhirConditionServiceImplTest {
 	
 	@Test
 	public void getConditionByUuid_shouldReturnCondition() {
-		when(dao.getConditionByUuid(CONDITION_UUID)).thenReturn(openmrsCondition);
-		when(conditionTranslator.toFhirResource(openmrsCondition)).thenReturn(fhirCondition);
-		org.hl7.fhir.r4.model.Condition result = conditionService.getConditionByUuid(CONDITION_UUID);
+		when(dao.get(CONDITION_UUID)).thenReturn(openmrsCondition);
+		when(translator.toFhirResource(openmrsCondition)).thenReturn(fhirCondition);
+		org.hl7.fhir.r4.model.Condition result = conditionService.get(CONDITION_UUID);
 		assertThat(result, notNullValue());
 		assertThat(result.getId(), equalTo(CONDITION_UUID));
 	}
 	
 	@Test
 	public void getConditionByWrongUuid_shouldReturnCondition() {
-		assertThat(conditionService.getConditionByUuid(WRONG_CONDITION_UUID), nullValue());
+		assertThat(conditionService.get(WRONG_CONDITION_UUID), nullValue());
 		
 	}
 }

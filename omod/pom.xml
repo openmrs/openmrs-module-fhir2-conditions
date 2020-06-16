@@ -10,25 +10,14 @@
 	<artifactId>fhir2conditions-omod</artifactId>
 	<packaging>jar</packaging>
 	<name>Fhir2 Conditions OMOD</name>
-	<description>Omod submodule for Fhir2 Conditions</description>
+	<description>OMOD for FHIR2 conditions</description>
 
 	<dependencies>
         <dependency>
             <groupId>org.openmrs.module</groupId>
-            <artifactId>fhir2conditions-api</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+            <artifactId>${project.parent.artifactId}-api</artifactId>
+            <version>${project.version}</version>
         </dependency>
-		<dependency>
-			<groupId>org.openmrs.web</groupId>
-			<artifactId>openmrs-web</artifactId>
-            <scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.openmrs.web</groupId>
-			<artifactId>openmrs-web</artifactId>
-			<scope>provided</scope>
-			<classifier>tests</classifier>
-		</dependency>
 	</dependencies>
 
 	<build>

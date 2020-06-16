@@ -9,51 +9,32 @@
  */
 package org.openmrs.module.fhir2conditions.api.dao.impl;
 
-import static org.hibernate.criterion.Restrictions.eq;
-
-import java.util.Collection;
-
-import ca.uhn.fhir.rest.api.SortSpec;
-import ca.uhn.fhir.rest.param.DateRangeParam;
-import ca.uhn.fhir.rest.param.QuantityAndListParam;
-import ca.uhn.fhir.rest.param.ReferenceAndListParam;
-import ca.uhn.fhir.rest.param.TokenAndListParam;
-import lombok.AccessLevel;
-import lombok.Setter;
 import org.hibernate.SessionFactory;
 import org.openmrs.annotation.OpenmrsProfile;
 import org.openmrs.module.emrapi.conditionslist.Condition;
 import org.openmrs.module.fhir2.api.dao.FhirConditionDao;
+import org.openmrs.module.fhir2.api.dao.impl.BaseFhirDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
 @Primary
 @Component("fhir2conditions.fhirConditionDaoImpl")
-@Setter(AccessLevel.PACKAGE)
 @OpenmrsProfile(openmrsPlatformVersion = "2.0.* - 2.1.*")
-public class FhirConditionDaoImpl implements FhirConditionDao<Condition> {
+public class FhirConditionDaoImpl extends BaseFhirDao<Condition> implements FhirConditionDao<Condition> {
 	
 	@Autowired
+	@Qualifier("sessionFactory")
 	private SessionFactory sessionFactory;
 	
 	@Override
-	public Condition getConditionByUuid(String uuid) {
-		return (Condition) sessionFactory.getCurrentSession()
-		        .createCriteria(org.openmrs.module.emrapi.conditionslist.Condition.class).add(eq("uuid", uuid))
-		        .uniqueResult();
+	public SessionFactory getSessionFactory() {
+		return this.sessionFactory;
 	}
 	
 	@Override
 	public Condition saveCondition(Condition condition) {
-		return null;
-	}
-	
-	@Override
-	public Collection<Condition> searchForConditions(ReferenceAndListParam referenceAndListParam,
-	        ReferenceAndListParam referenceAndListParam1, TokenAndListParam tokenAndListParam,
-	        TokenAndListParam tokenAndListParam1, DateRangeParam dateRangeParam, QuantityAndListParam quantityAndListParam,
-	        DateRangeParam dateRangeParam1, SortSpec sortSpec) {
 		return null;
 	}
 }
