@@ -79,6 +79,6 @@
 		<lombokVersion>1.18.10</lombokVersion>
         <openmrsPlatformVersion>2.0.5</openmrsPlatformVersion>
 		<openmrsModuleFhirVersion>1.0.0-SNAPSHOT</openmrsModuleFhirVersion>
-		<emrApiConditionModuleApiVersion>1.27.0</emrApiConditionModuleApiVersion>
+		<emrApiConditionModuleApiVersion>1.28.0</emrApiConditionModuleApiVersion>
     </properties>
 </project>
