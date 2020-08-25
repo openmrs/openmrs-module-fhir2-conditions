@@ -12,9 +12,10 @@ package org.openmrs.module.fhir2conditions.api.impl;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
-import static org.hamcrest.Matchers.nullValue;
+import static org.junit.Assert.assertThrows;
 import static org.mockito.Mockito.when;
 
+import ca.uhn.fhir.rest.server.exceptions.ResourceNotFoundException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -67,7 +68,7 @@ public class FhirConditionServiceImplTest {
 	
 	@Test
 	public void getConditionByWrongUuid_shouldReturnCondition() {
-		assertThat(conditionService.get(WRONG_CONDITION_UUID), nullValue());
+		assertThrows(ResourceNotFoundException.class, () -> conditionService.get(WRONG_CONDITION_UUID));
 		
 	}
 }

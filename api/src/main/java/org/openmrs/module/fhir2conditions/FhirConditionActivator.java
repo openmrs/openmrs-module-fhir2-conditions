@@ -9,29 +9,23 @@
  */
 package org.openmrs.module.fhir2conditions;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.openmrs.module.BaseModuleActivator;
 
 /**
  * This class contains the logic that is run every time this module is either started or shutdown
  */
+@Slf4j
 public class FhirConditionActivator extends BaseModuleActivator {
-	
-	private Log log = LogFactory.getLog(this.getClass());
-	
-	/**
-	 * @see #started()
-	 */
+
+	@Override
 	public void started() {
-		log.info("Started Fhir2 Conditions");
+		log.info("Started FHIR CONDITIONS");
 	}
-	
-	/**
-	 * @see #stopped() ()
-	 */
+
+	@Override
 	public void stopped() {
-		log.info("Stopped Fhir2 Conditions");
+		log.info("Shutdown FHIR CONDITIONS");
 	}
-	
+
 }
